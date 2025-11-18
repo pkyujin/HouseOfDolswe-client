@@ -5,6 +5,8 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ChatExample from "../../public/chatExample.svg";
+import SituationExample from "../../public/situationExample.svg";
+
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -34,9 +36,16 @@ export default function Onboarding() {
             <SlideText>돌쇠의 집은<br />돌쇠의 목소리 아카이브예요</SlideText>
             <ChatImg src={ChatExample} alt="Logo Text White" />
           </SlideBox>
-          <SlideBox>2단계 화면</SlideBox>
-          <SlideBox>3단계 화면</SlideBox>
-          <SlideBox>4단계 화면</SlideBox>
+          <SlideBox>
+            <SlideText>사용자님,<br />어떤 상황에서<br />돌쇠의 집을 쓰고 싶으신가요?</SlideText>
+          </SlideBox>
+          <SlideBox>
+            <SlideText>연령대를 알려주세요</SlideText>
+          </SlideBox>
+          <SlideBox>
+            <SlideText>이런 상황에서<br />돌쇠의 집을 활용해보세요</SlideText>
+            <SituationImg src={SituationExample} alt="Logo Text White" />
+          </SlideBox>
         </Slider>
       </SliderWrapper>
 
@@ -106,18 +115,31 @@ const ChatImg = styled.img`
   height: auto;
 `;
 
+const SituationImg = styled.img`
+  display: block;
+  margin: 0 auto;
+  margin-top: 10vh;
+  width: 75vw;
+  height: auto;
+`;
+
 
 const ButtonWrapper = styled.div`
   position: absolute;
   bottom: 5vh;
   width: 100%;
+  height: 6vh; 
   display: flex;
   justify-content: center;
   gap: 10px;
-  border: 1px solid red;
 `;
 
 const Button = styled.button`
+  width: 88%;
+  border: none;
+  background: #000000;
+  color: white;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 12px;
+  font-size: 1rem;
 `;
