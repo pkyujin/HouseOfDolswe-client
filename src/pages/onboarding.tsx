@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import AgePicker from "../components/agePicker";
 import ChatExample from "../../public/chatExample.svg";
 import SituationExample from "../../public/situationExample.svg";
 
@@ -14,8 +15,10 @@ export default function Onboarding() {
   const sliderRef = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = 4;
-
   const nextSlide = () => sliderRef.current?.slickNext();
+
+  const [selectedAge, setSelectedAge] = useState<string | null>(null);
+
 
   const settings = {
     dots: false,
@@ -48,6 +51,8 @@ export default function Onboarding() {
           </SlideBox>
           <SlideBox>
             <SlideText>연령대를 알려주세요</SlideText>
+            <SmallText>서비스 개선 전반에 반영됩니다</SmallText>
+            <PickerWrapper> <AgePicker onSelect={setSelectedAge} /> </PickerWrapper>
           </SlideBox>
           <SlideBox>
             <SlideText>이런 상황에서<br />돌쇠의 집을 활용해보세요</SlideText>
@@ -62,12 +67,23 @@ export default function Onboarding() {
       </SliderWrapper>
 
       <ButtonWrapper>
-        {currentSlide < totalSlides - 1 ? (
-          <Button onClick={nextSlide}>다음</Button>
-        ) : (
-          <Button onClick={() => navigate("/audio")}>시작하기</Button>
-        )}
-      </ButtonWrapper>
+  {currentSlide === 0 && (
+    <Button onClick={nextSlide}>다음</Button>
+  )}
+
+  {currentSlide === 1 && (
+    <Button onClick={nextSlide}>다음</Button>
+  )}
+
+  {currentSlide === 2 && (
+    <AgeButton onClick={nextSlide} disabled={!selectedAge}>다음</AgeButton>
+  )}
+  {currentSlide === 3 ? (
+    <Button onClick={() => navigate("/audio")}>시작하기</Button>
+  ) : null}
+</ButtonWrapper>
+
+
     </Container>
   );
 }
@@ -119,6 +135,21 @@ const SlideText = styled.p`
   padding: 8vh 0 0 8vw;
 `
 
+const SmallText = styled.p`
+  font-size: 3.5vw;
+  color: #7B7B8B;
+  padding-left: 8vw;
+  margin-top: -2vh;
+`
+
+const PickerWrapper = styled.p`
+  display: block;
+  margin: 0 auto;
+  margin-top: 15vh;
+  width: 55vw;
+  height: auto;
+`
+
 const ChatImg = styled(motion.img)`
   display: block;
   margin: 0 auto;
@@ -155,3 +186,14 @@ const Button = styled.button`
   border-radius: 12px;
   font-size: 1rem;
 `;
+
+const AgeButton = styled.button<{ disabled: boolean }>`
+  width: 88%;
+  border: none;
+  background: ${(props) => (props.disabled ? "#E6E9EB" : "#000000")};
+  color: ${(props) => (props.disabled ? "#B0BABF" : "white")};
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 1rem;
+`;
+
