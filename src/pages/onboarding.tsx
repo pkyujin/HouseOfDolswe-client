@@ -8,13 +8,13 @@ import "slick-carousel/slick/slick-theme.css";
 import AgePicker from "../components/agePicker";
 import ChatExample from "../../public/chatExample.svg";
 import SituationExample from "../../public/situationExample.svg";
-
+import HousePicker from "../components/housePicker";
+import CallPicker from "../components/callPicker";
 
 export default function Onboarding() {
   const navigate = useNavigate();
   const sliderRef = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 4;
   const nextSlide = () => sliderRef.current?.slickNext();
 
   const [selectedAge, setSelectedAge] = useState<string | null>(null);
@@ -48,11 +48,18 @@ export default function Onboarding() {
           </SlideBox>
           <SlideBox>
             <SlideText>사용자님,<br />어떤 상황에서<br />돌쇠의 집을 쓰고 싶으신가요?</SlideText>
+            <SituationWrapper>
+              <HousePicker />
+              <Line />
+              <CallPicker />
+            </SituationWrapper>
           </SlideBox>
           <SlideBox>
             <SlideText>연령대를 알려주세요</SlideText>
             <SmallText>서비스 개선 전반에 반영됩니다</SmallText>
-            <PickerWrapper> <AgePicker onSelect={setSelectedAge} /> </PickerWrapper>
+            <PickerWrapper> 
+              <AgePicker onSelect={setSelectedAge} />
+            </PickerWrapper>
           </SlideBox>
           <SlideBox>
             <SlideText>이런 상황에서<br />돌쇠의 집을 활용해보세요</SlideText>
@@ -134,6 +141,21 @@ const SlideText = styled.p`
   font-weight: bold;
   padding: 8vh 0 0 8vw;
 `
+
+const SituationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2vw;
+  margin-top: 8vh;
+`
+
+const Line = styled.p`
+  height: 27vh;
+  border-left: 1.3px solid #0000001A;
+  margin-top: 8vh;
+`
+
 
 const SmallText = styled.p`
   font-size: 3.5vw;
