@@ -17,6 +17,8 @@ export default function Onboarding() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const nextSlide = () => sliderRef.current?.slickNext();
 
+  const [houseSelected, setHouseSelected] = useState<string[]>([]);
+  const [callSelected, setCallSelected] = useState<string[]>([]);
   const [selectedAge, setSelectedAge] = useState<string | null>(null);
 
 
@@ -49,9 +51,9 @@ export default function Onboarding() {
           <SlideBox>
             <SlideText>사용자님,<br />어떤 상황에서<br />돌쇠의 집을 쓰고 싶으신가요?</SlideText>
             <SituationWrapper>
-              <HousePicker />
+              <HousePicker onSelectChange={setHouseSelected}/>
               <Line />
-              <CallPicker />
+              <CallPicker onSelectChange={setCallSelected}/>
             </SituationWrapper>
           </SlideBox>
           <SlideBox>
@@ -79,7 +81,10 @@ export default function Onboarding() {
   )}
 
   {currentSlide === 1 && (
-    <Button onClick={nextSlide}>다음</Button>
+    <SituationButton 
+      onClick={nextSlide}
+      disabled={houseSelected.length === 0 && callSelected.length ===0}
+    >다음</SituationButton>
   )}
 
   {currentSlide === 2 && (
@@ -204,6 +209,16 @@ const Button = styled.button`
   border: none;
   background: #000000;
   color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 1rem;
+`;
+
+const SituationButton = styled.button<{ disabled: boolean }>`
+  width: 88%;
+  border: none;
+  background: ${(props) => (props.disabled ? "#E6E9EB" : "#000000")};
+  color: ${(props) => (props.disabled ? "#B0BABF" : "white")};
   padding: 10px 20px;
   border-radius: 12px;
   font-size: 1rem;
