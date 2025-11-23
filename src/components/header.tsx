@@ -3,10 +3,10 @@ import HeaderLogo from '../../public/headerLogo.svg';
 
 const Container = styled.div`
   width: 100%;
-  height: 12vh;
+  height: 8vh;
   padding-left: 9vw; 
-  margin-top: 3vh;
-`
+  margin-top: 4vh;
+`;
 const LogoImg = styled.img`
   width: 28vw;
   height: 100%;

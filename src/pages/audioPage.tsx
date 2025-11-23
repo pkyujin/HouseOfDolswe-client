@@ -4,6 +4,7 @@ import useLoading from "../hooks/useLoading";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import AudioItem from "../components/audioItem";
+import SearchBar from "../components/searchBar";
 import Spinner from "../../public/loadingSpinner.gif";
 
 
@@ -25,9 +26,6 @@ const SpinnerImg = styled.img`
   width: 10vw;
 `;
 
-const FooterWrapper = styled.div`
-  margin-top: auto;
-`;
 
 interface AudioData {
   title: string;
@@ -105,6 +103,7 @@ export default function AudioPage() {
       :
       <Container>
         <Header />
+        <SearchBar />
         {audioMockData.map((item, index) => (
         <AudioItem
           key={index}
@@ -113,9 +112,7 @@ export default function AudioPage() {
           tags={item.tags}
         />
       ))}
-        <FooterWrapper>
-          <Footer />
-        </FooterWrapper>
+      <Footer />
       </Container>}
     </>
   );
