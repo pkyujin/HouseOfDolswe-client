@@ -9,7 +9,7 @@ import SettingOnIcon from '../../public/settingOnIcon.svg';
 
 const Container = styled.div`
   width: 100%;
-  height: 13vh;
+  height: 11vh;
   display: flex;
   justify-content: center;
   align-items: center;
