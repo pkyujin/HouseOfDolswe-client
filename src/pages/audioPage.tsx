@@ -26,7 +26,7 @@ const SpinnerImg = styled.img`
 `;
 
 const FooterWrapper = styled.div`
-  margin-top: auto;   // 핵심
+  margin-top: auto;
 `;
 
 

@@ -12,12 +12,19 @@ const Container = styled.div`
   align-items: center;
   gap: 17vw;
   box-shadow: 4px 4px 20.7px 0px #00000021;
-`
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: white;
+  z-index: 100;
+`;
+
 const IconWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const PageIcon = styled.img`
   width: 6vw;
