@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import SearchIcon from '../../public/searchIcon.svg';
+import { useState } from 'react';
 
 
 const Container = styled.div`
@@ -37,14 +38,25 @@ const IconBox = styled.img`
   margin-left: 6vw;
 `;
 
+interface SearchBarProps {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
 
-export default function SearchBar() {
-
+export default function SearchBar({ search, setSearch }: SearchBarProps) {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+  
   return (
     <Container>
         <SearchWrapper>
             <IconBox src={SearchIcon} />
-            <SearchInput placeholder="키워드를 검색하세요" />
+            <SearchInput 
+              placeholder="키워드를 검색하세요"
+              value={search}
+              onChange={onChange}  
+            />
         </SearchWrapper>
     </Container>
   );

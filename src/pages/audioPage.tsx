@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useLoading from "../hooks/useLoading";
 import Header from "../components/header";
@@ -77,6 +77,11 @@ export default function AudioPage() {
   }
 ];
 
+  const [search, setSearch] = useState("");
+  const filteredData = audioMockData.filter(item => 
+    item.title.includes(search) || item.name.includes(search) || item.tags.some(tag => tag.includes(search))
+  );
+
   const { isLoading, stopLoading } = useLoading(true); 
 
   useEffect(() => {
@@ -103,17 +108,18 @@ export default function AudioPage() {
       :
       <Container>
         <Header />
-        <SearchBar />
-        {audioMockData.map((item, index) => (
-        <AudioItem
-          key={index}
-          title={item.title}
-          name={item.name}
-          tags={item.tags}
-        />
-      ))}
-      <Footer />
-      </Container>}
+        <SearchBar search={search} setSearch={setSearch} />
+          
+          {filteredData.map((item, index) => (
+            <AudioItem
+              key={index}
+              title={item.title}
+              name={item.name}
+              tags={item.tags}
+            />
+          ))}
+          <Footer />
+        </Container>}
     </>
   );
 }
