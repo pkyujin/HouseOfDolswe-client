@@ -3,7 +3,8 @@ import Home from "./pages/home";
 import AudioPage from "./pages/audioPage";
 import GuestHome from "./pages/guestHome";
 import Onboarding from "./pages/onboarding";
-import Call from "./pages/Call";
+import Call from "./pages/call";
+import ThanksTo from "./pages/thanksTo";
 import Settings from "./pages/settings";
 
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/call" element={<Call />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/thanks" element={<ThanksTo />} />
       </Routes>
     </BrowserRouter>
   );
