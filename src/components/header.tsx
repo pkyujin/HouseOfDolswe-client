@@ -7,9 +7,9 @@ import FillHeart from '../../public/fillHeart.svg';
 
 const Container = styled.div`
   width: 100%;
-  height: 8vh;
+  height: 6vh;
   padding-left: 9vw; 
-  margin-top: 4vh;
+  margin-top: 6vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
