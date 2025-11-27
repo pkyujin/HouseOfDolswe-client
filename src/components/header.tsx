@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import styled from 'styled-components';
 import HeaderLogo from '../../public/headerLogo.svg';
 import Heart from '../../public/heart.svg';

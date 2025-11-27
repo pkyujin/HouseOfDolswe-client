@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import ProfileImg from '../../public/profileImg.svg';
 import Bookmark from '../../public/bookmark.svg';
@@ -77,21 +76,28 @@ const PlayBar = styled.div`
 
 
 interface AudioItemProps {
+  id: number,
   title: string;
   name: string;
   tags: string[];
   selected: boolean;
   disabled: boolean;
   onSelect: () => void;
+  onToggleBookmark: (id: number) => void;
+  isBookmarked: boolean;
 }
 
-export default function AudioItem({ title, name, tags, selected, disabled, onSelect }: AudioItemProps) {
+export default function AudioItem({ 
+  id,
+  title,
+  name,
+  tags,
+  selected,
+  disabled,
+  onSelect,
+  onToggleBookmark,
+  isBookmarked }: AudioItemProps) {
 
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
-  const toggleBookmark = () => {
-  setIsBookmarked(prev => !prev);
-  };
 
   return (
     <>
@@ -107,7 +113,10 @@ export default function AudioItem({ title, name, tags, selected, disabled, onSel
             </DetailWrapper>
         </TextWrapper>
         <BookmarkWrapper>
-          <BookmarkIcon onClick={toggleBookmark}>
+          <BookmarkIcon onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.stopPropagation(); // 부모 클릭 방지
+              onToggleBookmark(id);
+            }}>
             <img 
               src={isBookmarked ? BookmarkOn : Bookmark}
               style={{ width: "6vw" }}

@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import SearchIcon from '../../public/searchIcon.svg';
-import { useState } from 'react';
-
 
 const Container = styled.div`
   width: 100%;

@@ -44,6 +44,7 @@ const CategoryItem = styled.p<{ active: boolean }>`
 `;
 
 interface AudioData {
+  id: number,
   title: string;
   name: string;
   tags: string[];
@@ -52,41 +53,41 @@ interface AudioData {
 export default function AudioPage() {
   const audioMockData: AudioData[] = [
   {
-    
+    id: 1,
     title: "누구세요?",
     name: "장춘배",
     tags: ["택배", "배달", "당근"],
   },
   {
-    
+    id:2,
     title: "네~ 문 앞에 두고 가세요",
     name: "장춘배",
     tags: ["택배", "배달", "당근"],
   },
   {
-    
+    id:3,
     title: "문 앞에 있는 거 가져가시면 돼요",
     name: "김OO",
     tags: ["택배", "배달", "당근"],
   },
   {
-    
+    id:4,
     title: "제가 지금 씻고 있어서요~",
     name: "김OO",
     tags: ["택배", "배달", "당근"],
   },
   {
-    
+    id:5,
     title: "지금 못 나가요",
     name: "슈퍼톤AI - VoiceA",
     tags: ["택시", "골목길", "당근"],
   },{
-    
+    id:6,
     title: "네~",
     name: "슈퍼톤AI - VoiceB",
     tags: ["택시", "골목길", "당근"],
   },{
-    
+    id:7,
     title: "아니요~",
     name: "슈퍼톤AI - VoiceB",
     tags: ["택시", "배달", "당근"],
@@ -103,16 +104,27 @@ export default function AudioPage() {
     setSelectedIndex(index);
   };
 
+  const [bookmarks, setBookmarks] = useState<number[]>([]);
+
+  const handleToggleBookmark = (id: number) => {
+  setBookmarks(prev =>
+    prev.includes(id)
+      ? prev.filter(b => b !== id) // 이미 있으면 제거
+      : [...prev, id]              // 없으면 추가
+  );
+};
 
   const categoryFiltered = audioMockData.filter((item) => {
-    const has문앞 = item.tags.some((t) => t.includes("택배") || t.includes("배달"));
-    const has귀가 = item.tags.some((t) => t.includes("택시") || t.includes("골목길"));
+  const has문앞 = item.tags.some(t => t.includes("택배") || t.includes("배달"));
+  const has귀가 = item.tags.some(t => t.includes("택시") || t.includes("골목길"));
 
-    if (category === "문 앞(택배,배달)") return has문앞;
-    if (category === "귀가(택시,골목길)") return has귀가;
+  if (category === "문 앞(택배,배달)") return has문앞;
+  if (category === "귀가(택시,골목길)") return has귀가;
+  if (category === "즐겨찾기") return bookmarks.includes(item.id);
 
-    return true;
+  return true;
   });
+
 
   const filteredData = categoryFiltered.filter(
     (item) =>
@@ -139,6 +151,8 @@ export default function AudioPage() {
     loadAudioData();
   }, []);
 
+
+
   return (
     <>
       {isLoading ?
@@ -164,17 +178,21 @@ export default function AudioPage() {
 
         <SearchBar search={search} setSearch={setSearch} />
           
-          {filteredData.map((item, index) => (
-            <AudioItem
-              key={index}
-              title={item.title}
-              name={item.name}
-              tags={item.tags}
-              selected={selectedIndex === index}
-              disabled={selectedIndex !== null && selectedIndex !== index}
-              onSelect={() => handleSelect(index)}
-            />
-          ))}
+          {filteredData.map((item) => (
+  <AudioItem
+    key={item.id}
+    id={item.id}
+    title={item.title}
+    name={item.name}
+    tags={item.tags}
+    selected={selectedIndex === item.id}
+    disabled={selectedIndex !== null && selectedIndex !== item.id}
+    onSelect={() => handleSelect(item.id)}
+    onToggleBookmark={handleToggleBookmark}
+    isBookmarked={bookmarks.includes(item.id)}
+  />
+))}
+
           <Footer />
         </Container>}
     </>

@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HeartProvider } from "./context/heartContext";
 import Home from "./pages/home";
 import AudioPage from "./pages/audioPage";
 import GuestHome from "./pages/guestHome";
