@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LogoWhite from "../../public/logoWhite.svg";
 
@@ -42,9 +41,32 @@ const LoginButton = styled.button`
   bottom: 7vh;
 `;
 
-export default function Home() {
-  const navigate = useNavigate();
+const loginWithKakao = () => {
+  if (!window.Kakao || !window.Kakao.Auth) {
+    console.error("Kakao SDK not ready");
+    return;
+  }
 
+  window.Kakao.Auth.login({
+    scope: "profile_nickname",
+    success: (authObj: any) => {
+      console.log("카카오 로그인 성공:", authObj);
+      // access_token 여기서 바로 사용 가능
+      window.Kakao.API.request({
+        url: "/v2/user/me",
+        success: (res: any) => console.log(res),
+        fail: (err: any) => console.error(err),
+      });
+    },
+    fail: (err: any) => {
+      console.error("카카오 로그인 실패:", err);
+    },
+  });
+};
+
+
+
+export default function Home() {
 
 
   return (
@@ -55,7 +77,7 @@ export default function Home() {
             </LogoImgWrapper>
             <LogoText>언제 어디서든, 내 주머니 속 포켓 돌쇠</LogoText>
         </LogoWrapper>
-      <LoginButton onClick={() => navigate("/onboarding")}>
+      <LoginButton onClick={loginWithKakao}>
         카카오 로그인
       </LoginButton>
     </Container>
