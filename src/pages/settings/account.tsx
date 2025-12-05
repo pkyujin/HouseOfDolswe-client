@@ -1,11 +1,18 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import styled from "styled-components";
 import MoveToIcon from "../../../public/moveToIcon.svg";
+import SignOutModal from "../../components/signOutModal";
 
 export default function Account() {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {  
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -18,7 +25,10 @@ export default function Account() {
         </MenuBox>
         <MenuBox>
           계정 탈퇴
-          <MoveToButton src={MoveToIcon} />
+          <MoveToButton 
+          src={MoveToIcon}
+          onClick={() => openModal()}
+          />
         </MenuBox>
         <MenuBox>
           서비스 이용약관
@@ -29,6 +39,9 @@ export default function Account() {
           <MoveToButton src={MoveToIcon} onClick={()=>navigate("/settings/dataPolicy")}/>
         </MenuBox>
        </Container>
+       {isModalOpen && (
+        <SignOutModal onClose={() => setIsModalOpen(false)}/>
+        )}
       <Footer />
     </>
   );

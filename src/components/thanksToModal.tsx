@@ -64,7 +64,7 @@ const Backdrop = styled.div`
 const ModalBox = styled.div`
   width: 75%;
   padding: 3vh 7.5vw;
-  border-radius: 23px;
+  border-radius: 20px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -118,7 +118,7 @@ const VisitButton = styled.button<{disabled?: boolean}>`
   width: 100%;
   height: 4.5vh;
   background-color: ${({ disabled }) => (disabled ? "#E6E9EB" : "#000000")};
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 3.2vw;
   color: ${({ disabled }) => (disabled ? "#B0BABF" : "#FFFFFF")};
   border: none;
