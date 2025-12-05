@@ -1,11 +1,12 @@
 import styled from "styled-components";
-
+import { useState } from "react";
 
 interface SignOutModalProps {
   onClose: () => void;
 }
 
 export default function SignOutModal({ onClose }: SignOutModalProps) {
+  const [selected, setSelected] = useState<string | null>(null);
 
   const onBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -24,24 +25,34 @@ export default function SignOutModal({ onClose }: SignOutModalProps) {
           돌쇠의 집을 사용해주셔서 감사합니다.<br />탈퇴 사유를 알려주세요.
         </Content>
         <TextButtonWrapper>
-            <TextButton>
+            <TextButton 
+            selected={selected === "hard"}
+            onClick={() => setSelected("hard")}>
               사용법이 어려워요
             </TextButton>
-            <TextButton>
+            <TextButton
+            selected={selected === "unused"}
+            onClick={() => setSelected("unused")}>
               생각보다 잘 사용하지 않아요
             </TextButton>
-            <TextButton>
+            <TextButton
+            selected={selected === "different"}
+            onClick={() => setSelected("different")}>
               기대했던 것과 달라요
             </TextButton>
-            <TextButton>
+            <TextButton
+            selected={selected === "error"}
+            onClick={() => setSelected("error")}>
               앱에서 오류가 발생해요
             </TextButton>
-            <TextButton>
+            <TextButton
+            selected={selected === "etc"}
+            onClick={() => setSelected("etc")}>
               기타
             </TextButton>
         </TextButtonWrapper>
         <ButtonWrapper>
-            <SignOutButton>
+            <SignOutButton disabled={!selected}>
                탈퇴하기
             </SignOutButton>
             <CancelButton onClick={onClose}>
@@ -109,15 +120,16 @@ const TextButtonWrapper = styled.div`
   gap: 2vw;
 `;
 
-const TextButton = styled.button`
+const TextButton = styled.button<{ selected: boolean }>`
   width: 64vw;
   height: 5.5vh;
   display: flex;
   align-items: center;
   padding-left: 5vw;
-  border: 0.2vh solid #DFE4EB;
   border-radius: 10px;
-  background-color: #FFFFFF;
+  background-color: ${({ selected }) => (selected ? "#000000" : "#FFFFFF")};
+  border: 0.2vh solid ${({ selected }) => (selected ? "none" : "#DFE4EB")};
+  color: ${({ selected }) => (selected ? "#FFFFFF" : "#000000")};
   font-size: 3.5vw;
 `;
 
