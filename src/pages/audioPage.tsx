@@ -98,11 +98,11 @@ export default function AudioPage() {
   type CategoryType = "문 앞(택배,배달)" | "귀가(택시,골목길)" | "즐겨찾기";
   const [category, setCategory] = useState<CategoryType>("문 앞(택배,배달)");
 
-  /** 오디오 아이템 선택 */
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const handleSelect = (index: number) => {
     setSelectedIndex(index);
   };
+
 
   const [bookmarks, setBookmarks] = useState<number[]>([]);
 
@@ -151,7 +151,17 @@ export default function AudioPage() {
     loadAudioData();
   }, []);
 
+  const [initialLoad, setInitialLoad] = useState(true); // 첫 로드일때만 item 버튼 opacity 1이도록
+  useEffect(() => {
+  if (!isLoading) {
+    setInitialLoad(true);
 
+    // 1 프레임 이후 false로 변경 (opacity 유지용)
+    requestAnimationFrame(() => {
+      setInitialLoad(false);
+    });
+  }
+}, [isLoading]);
 
   return (
     <>
@@ -185,6 +195,7 @@ export default function AudioPage() {
     title={item.title}
     name={item.name}
     tags={item.tags}
+    isInitialLoad={initialLoad}
     selected={selectedIndex === item.id}
     disabled={selectedIndex !== null && selectedIndex !== item.id}
     onSelect={() => handleSelect(item.id)}

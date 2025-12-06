@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ProfileImg from '../../public/profileImg1.svg';
 import Bookmark from '../../public/bookmark.svg';
 import BookmarkOn from '../../public/bookmarkFill.svg'; 
+import PlayButton from '../../public/playButton.svg';
 
 const Container = styled.div<{ selected: boolean; disabled: boolean }>`
   width: 100%;
@@ -19,20 +20,20 @@ const Container = styled.div<{ selected: boolean; disabled: boolean }>`
 const ProfileBox = styled.img`
   width: 13.5vw;
   height: auto;
-  displat: flex;
+  display: flex;
   justify-content: center;
-  margin-left: 7vw;
+  margin-left: 6vw;
 `
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.3vh;
-  margin-left: 5vw;
+  margin-left: 4vw;
 `
 const LineBox = styled.p<{ selected: boolean; disabled: boolean }>`
   font-weight: bold;
-  font-size: 4vw;
+  font-size: 3.8vw;
   margin: 0;
   color: ${(props) => 
     props.selected ? "#000000" : 
@@ -54,19 +55,24 @@ const TagBox = styled.p`
   margin: 0;
   margin-left: 1.2vw;
 `
-const BookmarkWrapper = styled.div`
+const ButtonContainer = styled.div`
   margin-left: auto;
   display: flex;
   align-items: center;
-  margin-right: 5vw;
 `
-const BookmarkIcon = styled.button`
+const BookmarkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 4vw;
+`
+const BookmarkIcon = styled.button<{ isDimmed?: boolean }>`
   background: none;
   border: none;
   padding: 0;
   width: 6vw;
   height: auto;
   outline: none;
+  opacity: ${({ isDimmed }) => (isDimmed ? 0.4 : 1)};
 ` 
 const PlayBar = styled.div`
   width: 100%;
@@ -82,6 +88,7 @@ interface AudioItemProps {
   tags: string[];
   selected: boolean;
   disabled: boolean;
+  isInitialLoad: boolean;
   onSelect: () => void;
   onToggleBookmark: (id: number) => void;
   isBookmarked: boolean;
@@ -94,10 +101,12 @@ export default function AudioItem({
   tags,
   selected,
   disabled,
+  isInitialLoad,
   onSelect,
   onToggleBookmark,
   isBookmarked }: AudioItemProps) {
 
+  const isDimmed = !isInitialLoad && !selected;
 
   return (
     <>
@@ -112,17 +121,30 @@ export default function AudioItem({
                 ))}
             </DetailWrapper>
         </TextWrapper>
-        <BookmarkWrapper>
-          <BookmarkIcon onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+        <ButtonContainer>
+         <BookmarkWrapper>
+          <BookmarkIcon isDimmed={isDimmed} disabled={!selected}>
+            <img 
+              src={PlayButton}
+              style={{ width: "4vw" }}
+            />
+          </BookmarkIcon>
+         </BookmarkWrapper>
+         <BookmarkWrapper>
+          <BookmarkIcon
+          isDimmed={isDimmed}
+          disabled={!selected} 
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.stopPropagation(); // 부모 클릭 방지
               onToggleBookmark(id);
             }}>
             <img 
               src={isBookmarked ? BookmarkOn : Bookmark}
-              style={{ width: "6vw" }}
+              style={{ width: "5.3vw" }}
             />
           </BookmarkIcon>
-        </BookmarkWrapper>
+         </BookmarkWrapper>
+        </ButtonContainer>
       </Container>
       {selected && <PlayBar />}
     </>
